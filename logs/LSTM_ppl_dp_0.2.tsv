@@ -49,4 +49,4 @@ epoch	train_ppl_0.2	valid_ppl_0.2
 48	10.74	49.22
 49	10.78	49.22
 50	10.78	49.22
-test	48.39
+test_ppl	48.39
