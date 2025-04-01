@@ -20,24 +20,23 @@ done
 
 # download a different interesting data set!
 
-mkdir -p $data/grimm
 
-mkdir -p $data/grimm/raw
+echo "Downloading Friends dataset..."
+mkdir -p $data/friends
+mkdir -p $data/friends/raw
 
-wget https://www.gutenberg.org/files/52521/52521-0.txt
-mv 52521-0.txt $data/grimm/raw/tales.txt
-
-# preprocess slightly
-
-cat $data/grimm/raw/tales.txt | python $base/scripts/preprocess_raw.py > $data/grimm/raw/tales.cleaned.txt
+python3 $base/scripts/download_friends.py 
+# Cut to first 8k lines due to its big size
+head -n 8000 $base/data/friends/raw/friends.txt > $base/data/friends/raw/friends_8k.txt
+cat $data/friends/raw/friends_8k.txt | python $base/scripts/preprocess_raw.py > $base/data/friends/raw/friends.cleaned.txt
 
 # tokenize, fix vocabulary upper bound
-
-cat $data/grimm/raw/tales.cleaned.txt | python $base/scripts/preprocess.py --vocab-size 5000 --tokenize --lang "en" --sent-tokenize > \
-    $data/grimm/raw/tales.preprocessed.txt
+cat $data/friends/raw/friends.cleaned.txt | python $base/scripts/preprocess.py --vocab-size 5000 --tokenize --lang "en" --sent-tokenize > \
+    $data/friends/raw/friends.preprocessed.txt
 
 # split into train, valid and test
 
-head -n 440 $data/grimm/raw/tales.preprocessed.txt | tail -n 400 > $data/grimm/valid.txt
-head -n 840 $data/grimm/raw/tales.preprocessed.txt | tail -n 400 > $data/grimm/test.txt
-tail -n 3075 $data/grimm/raw/tales.preprocessed.txt | head -n 2955 > $data/grimm/train.txt
+
+head -n 10497 $data/friends/raw/friends.preprocessed.txt | tail -n 1200 > $data/friends/valid.txt
+head -n 11697 $data/friends/raw/friends.preprocessed.txt | tail -n 1200 > $data/friends/test.txt
+tail -n 11697 $data/friends/raw/friends.preprocessed.txt | tail -n 9297 > $data/friends/train.txt

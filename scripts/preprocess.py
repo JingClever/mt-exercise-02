@@ -8,11 +8,12 @@ import logging
 from collections import Counter
 from sacremoses import MosesTokenizer
 from itertools import chain
+import html
 
 from nltk.tokenize import sent_tokenize
 import nltk
 nltk.download('punkt')
-
+nltk.download('punkt_tab')
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -50,7 +51,7 @@ def main():
 
     for line in lines:
         if args.tokenize:
-            t = tokenizer.tokenize(line)
+            t = tokenizer.tokenize(line, escape = False)
         else:
             t = line.split()
         all_tokens.append(t)

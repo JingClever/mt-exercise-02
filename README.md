@@ -10,6 +10,58 @@ This repo shows how to train neural language models using [Pytorch example code]
 
     `pip install virtualenv`
 
+# Modifications
+
+**Addition of `download_friends.py` Script to Download the Corpus for Task 1**:
+- Adding a new script `download_friends.py` to download Friends from the Cornell Movie-Dialogs Corpus used for model training. Key changes include:
+  - **Install the package**: Install `convokit` package to download Friends corpus.
+  - **Download the data to txt file**: Write a short script to write the corpus to a txt file.
+
+**Changes to `download_data.sh` Script for Task 1***:
+- Updated the `download_data.sh` to manage data preprocessing for the Friends Corpus:
+  - Make a new directory to store the raw and processed data for Friends corpus.
+  - Run the python script `download_friends.py` to download the raw data.
+  - Cut the segments to 8,000 to make sure the proper vocabulary size with 5000.
+  - Change the previous code to preprocess the raw data.
+  - Split the preprocessed dataset to training, valid and testing with 9297, 1200, 1200 segments respectively.
+  - During preprocessing, `sacremoses.MosesTokenizer`  escapes characters like `&`, `'`, `"` into `&amp;`, `&apos;`, `&quot;`. If you want to convert them into origincal characters, just set `t = tokenizer.tokenize(line, escape = False)`
+
+**Changes to `train.sh` Script for Task 1**:
+- Adapted `train.sh` to accommodate the infrastructure and dataset changes:
+  - Changed the data directory in the script to `$data/friends` to align with the new dataset.
+  - Added the `--mps` flag to enable GPU support on macOS with Apple Silicon, enhancing training performance on compatible systems.
+
+**Changes to `train.sh` Script for Task 2**:
+- Logs Directory: Added a `logs` directory to store training logs for different dropout rates.
+- Multiple Dropout Rates: Introduced training across a range of dropout rates (0.0, 0.2, 0.3, 0.6, 0.8, 0.9) to observe the impact on model performance.
+- Epochs Increasing: Training epochs reduced from 40 to 50.
+- Increased Model Complexity: Increased embedding size and number of hidden units from 200 to 256 to potentially enhance model capability.
+- Detailed Training Logs: Added logging for each dropout rate training session with specific files per training session to make performance tracking easier.
+- Model Saving Convention: Models are now saved with names that reflect their respective dropout settings, e.g., `model_ppl_dp_0.pt`.
+
+**Changes to `generate.sh` Script for Task 1***:
+- Updated the script to ensure compatibility and functionality with the trained model and data:
+  - Modified directory paths to correctly point to the Friends dataset and model files.
+
+**Changes to `main.py` Script for Task 2**
+- Copy `main.py` as `main_ex2.py` to make a modification based on this script.
+- Added `--ppl-log` argument to log train/validation/test perplexities to a `.tsv` file.
+- Adjusted the `train()` function to return epoch-level training loss so that training perplexity can be computed and logged.
+- Used `.tsv` format with columns `epoch`, `train_ppl_{dropout}`, `valid_ppl_{dropout}`, and a test line at the end.
+
+**Addition of `plot_ppl.sh` Script to Create Tables for the Three Perplexities for Task 2**
+- This bash file is to run plot python file.
+- A new directory called results is created to store the final table file and plot results.
+- Just run the code in the script.
+
+**Addition of `plot_ppl.py` Script to Create Tables for the Three Perplexities for Task 2**
+- This script firstly combine all models-generated result into one `.tsv` file excluding test perplexity.
+- Then this script draw the line plot for the train and validation perplexity change. 
+
+**Addition of `plot_ppl_test.py` Script to Visualize Test Perplexity for Task 2**
+- This script extracts the last line of log file to build a bar plot for test perplexity change.
+
+
 # Steps
 
 Clone this repository in the desired place:
@@ -40,5 +92,8 @@ The training process can be interrupted at any time, and the best checkpoint wil
 Generate (sample) some text from a trained model with:
 
     ./scripts/generate.sh
+
+Plot the train, valid and test perplexity:
+    ./scripts/plot_ppl.sh
 
 
