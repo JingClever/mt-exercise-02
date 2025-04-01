@@ -10,30 +10,6 @@ results="$base/results"
 mkdir -p "$results"
 
 
-# python "$scripts/plot_ppl.py" \
-#     --model Transformer \
-#     --input_dir "$logs" \
-#     --output "$results/Transformer_ppl.tsv" \
-#     --plot_output "$results/Transformer_ppl.png"
-
-# python "$scripts/plot_ppl.py" \
-#     --model GRU \
-#     --input_dir "$logs" \
-#     --output "$results/GRU_ppl.tsv" \
-#     --plot_output "$results/GRU_ppl.png"
-
-# python "$scripts/plot_ppl.py" \
-#     --model LSTM \
-#     --input_dir "$logs" \
-#     --output "$results/LSTM_ppl.tsv" \
-#     --plot_output "$results/LSTM_ppl.png"
-
-# python "$scripts/plot_ppl.py" \
-#     --model RNN_RELU \
-#     --input_dir "$logs" \
-#     --output "$results/RNN_RELU.tsv" \
-#     --plot_output "$results/RNN_RELU.png"
-
 python "$scripts/plot_ppl.py" \
     --model LSTM \
     --input_dir "$logs" \
