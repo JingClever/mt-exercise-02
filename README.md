@@ -32,12 +32,11 @@ This repo shows how to train neural language models using [Pytorch example code]
   - Added the `--mps` flag to enable GPU support on macOS with Apple Silicon, enhancing training performance on compatible systems.
 
 **Change `train.sh` Script for Task 2**:
-- Logs Directory: Added a `logs` directory to store training logs for different dropout rates.
-- Multiple Dropout Rates: Introduced training across a range of dropout rates (0.0, 0.2, 0.3, 0.6, 0.8, 0.9) to observe the impact on model performance.
-- Epochs Increasing: Training epochs reduced from 40 to 50.
-- Increased Model Complexity: Increased embedding size and number of hidden units from 200 to 256 to potentially enhance model capability.
-- Detailed Training Logs: Added logging for each dropout rate training session with specific files per training session to make performance tracking easier.
-- Model Saving Convention: Models are now saved with names that reflect their respective dropout settings, e.g., `model_ppl_dp_0.pt`.
+- Added a `logs` directory to store training logs under different dropout rates.
+- Training epochs increased from 40 to 50.
+- Increased embedding size and number of hidden units from 200 to 256.
+- Added logging for each dropout rate training session with specific files.
+- Models are saved with names that includes model name and dropout, e.g., `model_ppl_dp_0.pt`.
 
 **Change`generate.sh` Script for Task 1**:
 - Updated the script to ensure compatibility and functionality with the trained model and data:
