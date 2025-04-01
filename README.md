@@ -93,6 +93,9 @@ Generate (sample) some text from a trained model with:
     ./scripts/generate.sh
 
 Plot the train, valid and test perplexity:
+
     ./scripts/plot_ppl.sh
+
+    
 
 
